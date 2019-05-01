@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="comboCodeMap">
+	<typeAlias alias="CommonCodeParm" type="com.dbcore.parm.common.CommonCodeParm"/>
+	<typeAlias alias="ComboCodeVO" type="com.dbcore.common.vo.ComboCodeVO"/>
+
+	<resultMap id="ComboCodeVO" class="ComboCodeVO">
+		<result property="code" column="code" nullValue="-"/>
+		<result property="codeNm" column="codeNm" nullValue="-"/>
+	</resultMap>
+	
+	<select id="selectComboItems" resultMap="ComboCodeVO" parameterClass="CommonCodeParm" >
+		 SELECT /*comboCodeMap.selectComboItems*/
+		    distinct(CMMN_GB_CD) as code
+		    ,CMMN_GB_NM as codeNm
+	    FROM 
+	    	cmmn_gb_cm
+	    WHERE 
+	    1=1
+	    AND 	
+	    	<!-- CHNL_ID= #chnlIdInfo# -->
+	    	CHNL_ID='admin'
+	    AND
+	    	<!-- USE_INIT_ID=#useInitIdInfo# -->
+	    	USE_INIT_ID='agent'
+	</select>
+	
+	<select id="selectSoCodeComboItems" resultMap="ComboCodeVO" parameterClass="CommonCodeParm" >
+		SELECT /*comboCodeMap.selectSoCodeComboItems*/
+	     DISTINCT(CMMN_CD) as code
+	    ,CMMN_CD_NM as codeNm
+	    FROM 
+	    	CMMN_CM
+	    WHERE
+   			1=1
+   		<isEqual property="codeType" compareValue="AGENT" prepend="AND">
+   			CMMN_GB_CD=#codeType#
+   		</isEqual>
+	    AND 	
+	    	CHNL_ID=#chnlIdInfo#
+	    AND
+	    	USE_INIT_ID=#useInitIdInfo#
+	</select>
+		
+</sqlMap>

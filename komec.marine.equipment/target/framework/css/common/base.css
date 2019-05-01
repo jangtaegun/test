@@ -1,0 +1,63 @@
+#menu{
+font-family:tahoma, verdana, arial;
+font-size:11px;
+}
+
+#menu ul{
+list-style:none;
+margin:0px;
+padding:0px;
+}
+
+#menu ul li{
+float:left;
+margin:0px;
+padding:0px;
+position:relative;
+}
+
+#menu ul li a{
+background-color:#EFEFEF;
+color:#000;
+display:block;
+margin:0px;
+padding:10px;
+text-decoration:none;
+}
+
+#menu ul li a:hover{
+background-color:#E9E9E9;
+color:#000;
+}
+
+#menu ul li ul{
+position:absolute;
+display:none;
+/*일반,디자인,미술가를 초기값으로 보이지않게한다.*/
+}
+
+#menu ul li ul li{
+clear:left;
+}
+
+#menu ul li ul li a{
+text-decoration:none;
+width:120px;
+}
+
+.header {
+	position:relative;
+	width: 905px; 
+	height: 75px;
+	margin: 0 auto; 
+	z-index:3000;
+}
+
+.main {
+	position: relative;
+	width: 905px;
+	height: 635px; 
+	margin: 0 auto;
+	padding:0;
+	z-index:0;
+}

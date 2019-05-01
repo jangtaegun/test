@@ -1,0 +1,16 @@
+@charset"UTF-8";
+/* skip */
+#accessibility, .skip, hr, legend {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	font-size: 0;
+	line-height: 0;
+	overflow: hidden;
+	visibility: hidden;
+	z-index: -1;
+}
+.boardSkip {
+	top: -4000px !important;
+	left: -4000px !important;
+}

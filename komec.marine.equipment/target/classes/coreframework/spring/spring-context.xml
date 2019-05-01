@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans 	xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:jee="http://www.springframework.org/schema/jee"
+		xmlns:p="http://www.springframework.org/schema/p"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx" 
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:util="http://www.springframework.org/schema/util"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans   
+       						http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       						http://www.springframework.org/schema/jee   
+       						http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+       						http://www.springframework.org/schema/aop   
+       						http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+       						http://www.springframework.org/schema/tx   
+       						http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+       						http://www.springframework.org/schema/context   
+       						http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+       						
+	<context:component-scan base-package="com.dbcore"/>     
+	
+	<bean id="lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler" lazy-init="true" />  						
+
+    <!-- ############### Database Configuration :: WAS (WAS의 datasource를 사용) ############### -->
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jdbc/komec_marine" />
+    </bean>
+    
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">     
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocations">
+            <list>
+                <value>classpath:coreframework/spring/spring-ibatis.xml</value>
+            </list>
+        </property> 
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<!-- 메시지소스빈 설정 -->
+    <bean id="coreMessageSource" class="com.dbcore.common.CoreMessageSource">
+        <property name="reloadableResourceBundleMessageSource">
+            <ref bean="messageSource" />
+        </property> 
+    </bean>
+    <!-- 프로퍼티 파일 위치 설정 -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>classpath:/coreframework/message/message-common</value>
+                <value>classpath:/egovframework/rte/fdl/idgnr/messages/idgnr</value>
+                <value>classpath:/egovframework/rte/fdl/property/messages/properties</value>
+            </list>
+        </property>
+        <property name="cacheSeconds">
+            <value>60</value>
+        </property>
+    </bean>
+	
+    <!-- ############### AOP Configuration ############### -->
+	<bean id="loggingAdvice" class="com.dbcore.common.advice.LoggingAdvice" />
+	<bean id="exceptionThrowsAdvice" class="com.dbcore.common.advice.ExceptionThrowsAdvice" />
+	
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+	
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+   
+</beans>
+

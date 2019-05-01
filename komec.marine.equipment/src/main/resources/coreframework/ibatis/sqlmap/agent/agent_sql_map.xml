@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="agent">
+
+	<typeAlias alias="agentInfoVo" type="com.dbcore.agent.vo.AgentInfoVo"/>
+	<typeAlias alias="agentParm" type="com.dbcore.parm.agent.AgentParm"/>
+
+	<resultMap id="agentInfoVoMap" class="com.dbcore.agent.vo.AgentInfoVo">
+		<result property="chnlId" 		column="chnlId" 		nullValue="-"/>
+		<result property="useInitId" 	column="useInitId" 		nullValue="-"/>
+		<result property="entrpsCd" 	column="entrpsCd" 		nullValue="-"/>
+		<result property="bizCnd" 		column="bizCnd"  		nullValue="-"/>
+		<result property="entrpsGbCd" 	column="entrpsGbCd" 	nullValue="-"/>
+		<result property="entrpsNm" 	column="entrpsNm" 		nullValue="-"/>
+		<result property="entrpsNmEng" 	column="entrpsNmEng"  	nullValue="-"/>
+		<result property="nationCd" 	column="nationCd"  		nullValue="-"/>
+	</resultMap>
+	
+	<select id="selectAgentList" parameterClass="agentInfoVo" resultMap="agentInfoVoMap">
+		SELECT
+				/*agent.selectAgentList*/ 
+			* 
+		FROM ( 	    
+			  SELECT 
+			    @RNUM := @RNUM + 0 AS SEQ, 
+			    SUB.* 
+			  FROM(
+			      select
+			      *
+			      FROM(
+			          SELECT
+				           a.CHNL_ID 		as chnlId
+				          ,a.USE_INIT_ID	as useInitId
+				          ,a.ENTRPS_CD 		as entrpsCd
+				          ,a.BIZCND 		as bizCnd 
+				          ,b.ENTRPS_GB_CD 	as entrpsGbCd
+				          ,a.ENTRPS_NM		as entrpsNm
+				          ,a.ENTRPS_NM_ENG 	as entrpsNmEng
+				          ,a.NATION_CD		as nationCd 
+				          ,a.INSERT_USER_ID	as insertUserId 
+				          ,a.INSERT_USER_DT as insertUserDt
+				          ,a.UPDATE_USER_ID as updateUserId
+				          ,a.UPDATE_USER_DT as updateUserDt
+			          FROM
+			            	ENTRPS_MS a,ENTRPS_GB_MS b
+			          WHERE
+			            	a.CHNL_ID=b.CHNL_ID
+			          AND
+			            	a.USE_INIT_ID=b.USE_INIT_ID
+			          AND
+			            	a.ENTRPS_CD=b.ENTRPS_CD
+			        )x,(SELECT @rnum := 0) R
+			         WHERE  
+			          1 = 1
+			         AND 
+			          bizCnd LIKE concat(#bizCnd#,'%') 
+			         AND
+			          entrpsNm LIKE concat(#entrpsNm#,'%')
+			         ORDER  BY insertUserDt
+			    )SUB
+		  )MAIN
+		WHERE SEQ BETWEEN #firstRecordIndex# + 1 AND #firstRecordIndex# + #recordCountPerPage#
+	</select>
+	
+	<select id="getTotalCount" parameterClass="agentParm" resultClass="int">  
+        SELECT	/*agent.getTotalCount*/
+			count(*) as totalCount
+		FROM
+		    ENTRPS_MS a,ENTRPS_GB_MS b
+		WHERE
+			1=1
+		AND
+		    a.CHNL_ID=b.CHNL_ID
+		AND
+		    a.USE_INIT_ID=b.USE_INIT_ID
+		AND
+		    a.ENTRPS_CD=b.ENTRPS_CD
+	     <isNotEmpty prepend=" AND " property="bizCnd">
+		 	BIZCND LIKE concat(#bizCnd#,'%') 
+		 </isNotEmpty>
+		  <isNotEmpty prepend=" AND " property="bizCnd">
+		 	ENTRPS_NM LIKE concat(#entrpsNm#,'%') 
+		 </isNotEmpty>
+	</select>	
+	
+	<insert id="codeDAO.insert" parameterClass="codeVO">
+		INSERT INTO CMMN_GB_CM
+	          (
+	           	   CHNL_ID
+	    		  ,USE_INIT_ID
+	    		  ,CMMN_GB_CD
+	    		  ,CMMN_GB_NM
+	    		  ,NUMBER1_DC
+	    		  ,NUMBER2_DC
+	    		  ,NUMBER3_DC
+	    		  ,CHRCTR1_DC
+	    		  ,CHRCTR2_DC
+	    		  ,CHRCTR3_DC
+	    		  ,SORT_ORDR
+	    		  ,RM
+	    		  ,INSERT_USER_ID
+	    		  ,INSERT_USER_DT 
+	          )
+		     VALUES
+		     (
+		          #chnlIdInfo#
+	    		  ,#useInitIdInfo#
+	    		  ,#cmmnGbCd#
+	    		  ,#cmmnGbNm#
+	    		  ,#number1Dc#
+	    		  ,#number2Dc#
+	    		  ,#number3Dc#
+	    		  ,#chrctr1Dc#
+	    		  ,#chrctr2Dc#
+	    		  ,#chrctr3Dc#
+	    		  ,#sortOrdr#
+	    		  ,#rm#
+	    		  ,#useInitIdInfo#
+	    		  ,now()
+		      )
+    </insert>
+</sqlMap>

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="code">
+
+	<typeAlias  alias="codeVO" type="com.dbcore.model.CodeVO"/>
+
+	<resultMap id="code" class="com.dbcore.model.CodeVO">
+		<result property="chnlId" column="chnlId" columnIndex="1"/>
+		<result property="useInitId" column="useInitId" columnIndex="2"/>
+		<result property="cmmnGbCd" column="cmmnGbCd" columnIndex="3"/>
+		<result property="cmmnGbNm" column="cmmnGbNm" columnIndex="4"/>
+		<result property="number1Dc" column="number1Dc" columnIndex="5"/>
+		<result property="number2Dc" column="number2Dc" columnIndex="6"/>
+		<result property="number3Dc" column="number3Dc" columnIndex="7"/>
+		<result property="chrctr1Dc" column="chrctr1Dc" columnIndex="8"/>
+		<result property="chrctr2Dc" column="chrctr2Dc" columnIndex="9"/>
+		<result property="chrctr3Dc" column="chrctr3Dc" columnIndex="10"/>
+		<result property="sortOrdr" column="sortOrdr" columnIndex="11"/>
+		<result property="rm" column="rm" columnIndex="12"/>
+	</resultMap>
+	
+	<resultMap id="soCodeMap" class="com.dbcore.model.CodeVO">
+		<result property="chnlId" column="chnlId" columnIndex="1"/>
+		<result property="useInitId" column="useInitId" columnIndex="2"/>
+		<result property="cmmnGbCd"	 column="cmmnGbCd" columnIndex="3"/>
+		<result property="cmmnCd" 	 column="cmmnCd" columnIndex="4"/>
+		<result property="cmmnCdNm"  column="cmmnCdNm" columnIndex="5"/>
+		<result property="number1Dc" column="number1Dc" columnIndex="6"/>
+		<result property="number2Dc" column="number2Dc" columnIndex="7"/>
+		<result property="number3Dc" column="number3Dc" columnIndex="8"/>
+		<result property="chrctr1Dc" column="chrctr1Dc" columnIndex="9"/>
+		<result property="chrctr2Dc" column="chrctr2Dc" columnIndex="10"/>
+		<result property="chrctr3Dc" column="chrctr3Dc" columnIndex="11"/>
+		<result property="sortOrdr" column="sortOrdr" columnIndex="12"/>
+		<result property="rm" column="rm" columnIndex="12"/>
+	</resultMap>
+	
+	<select id="codeDAO.selectList" parameterClass="codeVO" resultMap="code">  
+	SELECT * 
+		FROM ( 	
+			SELECT  @RNUM := @RNUM + 1 AS SEQ, SUB.*
+			FROM (  SELECT CHNL_ID as chnlId
+					    		  ,USE_INIT_ID as  useInitId
+					    		  ,CMMN_GB_CD as cmmnGbCd
+					    		  ,CMMN_GB_NM as cmmnGbNm
+					    		  ,NUMBER1_DC as number1Dc
+					    		  ,NUMBER2_DC as number2Dc
+					    		  ,NUMBER3_DC as number3Dc
+					    		  ,CHRCTR1_DC as chrctr1Dc
+					    		  ,CHRCTR2_DC as chrctr2Dc
+					    		  ,CHRCTR3_DC as chrctr3Dc
+					    		  ,SORT_ORDR as sortOrdr
+					    		  ,RM as rm
+					      FROM  CMMN_GB_CM,
+					               (SELECT @RNUM := 0) R					   
+					     WHERE 1 = 1
+					     <isNotEmpty prepend="AND" property="cmmnGbCd">
+						 	  CMMN_GB_CD LIKE CONCAT(#cmmnGbCd#,'%')
+						 </isNotEmpty>
+					     <isNotEmpty prepend="AND" property="cmmnGbNm">
+						 	CMMN_GB_NM LIKE CONCAT(#cmmnGbNm#,'%')
+						 </isNotEmpty>
+		 				ORDER BY CHNL_ID
+			)  SUB
+		)  MAIN 
+		WHERE SEQ BETWEEN #firstRecordIndex# + 1 AND #firstRecordIndex# + #recordCountPerPage#
+	</select>
+	<select id="codeDAO.selectSoCodeList" parameterClass="codeVO" resultMap="soCodeMap">  
+	SELECT * /*codeDAO.selectSoCodeList*/
+		FROM ( 	
+			SELECT  @RNUM := @RNUM + 1 AS SEQ, SUB.*
+			FROM (  SELECT CHNL_ID as chnlId
+					    		  ,USE_INIT_ID as  useInitId
+					    		  ,CMMN_GB_CD as  cmmnGbCd
+					    		  ,CMMN_CD as cmmnCd
+					    		  ,CMMN_CD_NM as cmmnCdNm
+					    		  ,NUMBER1 as number1Dc
+					    		  ,NUMBER2 as number2Dc
+					    		  ,NUMBER3 as number3Dc
+					    		  ,CHRCTR1 as chrctr1Dc
+					    		  ,CHRCTR2 as chrctr2Dc
+					    		  ,CHRCTR3 as chrctr3Dc
+					    		  ,SORT_ORDR as sortOrdr
+					    		  ,RM as rm
+					      FROM  CMMN_CM,
+					               (SELECT @RNUM := 0) R					   
+					     WHERE 1 = 1
+					     <isNotEmpty prepend="AND" property="cmmnGbCd">
+						 	  CMMN_CD LIKE CONCAT(#cmmn_Cd#,'%')
+						 </isNotEmpty>
+					     <isNotEmpty prepend="AND" property="cmmnGbNm">
+						 	CMMN_CD_NM LIKE CONCAT(#cmmnCdNm#,'%')
+						 </isNotEmpty>
+		 				ORDER BY CHNL_ID
+			)  SUB
+		)  MAIN 
+		WHERE SEQ BETWEEN #firstRecordIndex# + 1 AND #firstRecordIndex# + #recordCountPerPage#
+	</select>
+	
+	<select id="codeDAO.getTotalCount" parameterClass="codeVO" resultClass="int">  
+	    SELECT count(*) as totalCount
+	      FROM  CMMN_GB_CM
+	     WHERE 1 = 1
+	     <isNotEmpty prepend=" AND " property="cmmnGbNm">
+		 	CMMN_GB_NM LIKE ('%'||#cmmnGbNm#||'%')
+		 </isNotEmpty>
+	</select>	
+	
+	<select id="codeDAO.getSoCodeTotalCount" parameterClass="codeVO" resultClass="int">  
+	    SELECT /*codeDAO.getSoCodeTotalCount*/
+	     count(*) as totalCount
+	      FROM  CMMN_CM
+	     WHERE 1 = 1
+	     <isNotEmpty prepend=" AND " property="cmmnCdNm">
+		 	CMMN_CD_NM LIKE ('%'||#cmmnCdNm#||'%')
+		 </isNotEmpty>
+	</select>	
+	
+	<select id="codeDAO.selectDetailView" parameterClass="codeVO" resultMap="code">
+		SELECT     CHNL_ID as chnlId
+		    		  ,USE_INIT_ID as  useInitId
+		    		  ,CMMN_GB_CD as cmmnGbCd
+		    		  ,CMMN_GB_NM as cmmnGbNm
+		    		  ,NUMBER1_DC as number1Dc
+		    		  ,NUMBER2_DC as number2Dc
+		    		  ,NUMBER3_DC as number3Dc
+		    		  ,CHRCTR1_DC as chrctr1Dc
+		    		  ,CHRCTR2_DC as chrctr2Dc
+		    		  ,CHRCTR3_DC as chrctr3Dc
+		    		  ,SORT_ORDR as sortOrdr
+		    		  ,RM as rm
+           FROM    CMMN_GB_CM
+         WHERE    1 = 1 
+         AND        CHNL_ID = #chnlId#
+         AND        USE_INIT_ID = #useInitId#
+         AND        CMMN_GB_CD = #cmmnGbCd#
+	</select>
+	
+	<select id="detailSoCodeView" parameterClass="codeVO" resultMap="soCodeMap">
+		SELECT     /*code.detailSoCodeView*/
+					  CHNL_ID as chnlId
+		    		  ,USE_INIT_ID as  useInitId
+		    		  ,CMMN_GB_CD as cmmnGbCd
+		    		  ,CMMN_CD as cmmnCd
+		    		  ,CMMN_CD_NM as cmmnCdNm
+		    		  ,NUMBER1 as number1Dc
+		    		  ,NUMBER2 as number2Dc
+		    		  ,NUMBER3 as number3Dc
+		    		  ,CHRCTR1 as chrctr1Dc
+		    		  ,CHRCTR2 as chrctr2Dc
+		    		  ,CHRCTR3 as chrctr3Dc
+		    		  ,SORT_ORDR as sortOrdr
+		    		  ,RM as rm
+           FROM    CMMN_CM
+         WHERE    1 = 1 
+         AND        CHNL_ID = #chnlId#
+         AND        USE_INIT_ID = #useInitId#
+         AND        CMMN_CD = #cmmnCd#
+	</select>
+	
+	<insert id="codeDAO.insert" parameterClass="codeVO">
+		INSERT INTO CMMN_GB_CM
+	          (
+	           	   CHNL_ID
+	    		  ,USE_INIT_ID
+	    		  ,CMMN_GB_CD
+	    		  ,CMMN_GB_NM
+	    		  ,NUMBER1_DC
+	    		  ,NUMBER2_DC
+	    		  ,NUMBER3_DC
+	    		  ,CHRCTR1_DC
+	    		  ,CHRCTR2_DC
+	    		  ,CHRCTR3_DC
+	    		  ,SORT_ORDR
+	    		  ,RM
+	    		  ,INSERT_USER_ID
+	    		  ,INSERT_USER_DT 
+	          )
+		     VALUES
+		     (
+		          #chnlIdInfo#
+	    		  ,#useInitIdInfo#
+	    		  ,#cmmnGbCd#
+	    		  ,#cmmnGbNm#
+	    		  ,#number1Dc#
+	    		  ,#number2Dc#
+	    		  ,#number3Dc#
+	    		  ,#chrctr1Dc#
+	    		  ,#chrctr2Dc#
+	    		  ,#chrctr3Dc#
+	    		  ,#sortOrdr#
+	    		  ,#rm#
+	    		  ,#useInitIdInfo#
+	    		  ,now()
+		      )
+    </insert>
+    
+    <insert id="insertSoCode" parameterClass="codeVO">
+		INSERT INTO CMMN_CM /*code.insertSoCode*/
+	          (
+	           	   CHNL_ID
+	    		  ,USE_INIT_ID
+	    		  ,CMMN_GB_CD
+	    		  ,CMMN_CD
+	    		  ,CMMN_CD_NM
+	    		  ,NUMBER1
+	    		  ,NUMBER2
+	    		  ,NUMBER3
+	    		  ,CHRCTR1
+	    		  ,CHRCTR2
+	    		  ,CHRCTR3
+	    		  ,SORT_ORDR
+	    		  ,RM
+	    		  ,INSERT_USER_ID
+	    		  ,INSERT_USER_DT 
+	          )
+		     VALUES
+		     (
+		          #chnlIdInfo#
+	    		  ,#useInitIdInfo#
+	    		  ,#cmmnGbCd#
+	    		  ,#cmmnCd#
+	    		  ,#cmmnCdNm#
+	    		  ,#number1Dc#
+	    		  ,#number2Dc#
+	    		  ,#number3Dc#
+	    		  ,#chrctr1Dc#
+	    		  ,#chrctr2Dc#
+	    		  ,#chrctr3Dc#
+	    		  ,#sortOrdr#
+	    		  ,#rm#
+	    		  ,#useInitIdInfo#
+	    		  ,now()
+		      )
+    </insert>
+	
+	<delete id="codeDAO.delete" parameterClass="codeVO">
+ 		DELETE FROM CMMN_GB_CM 
+ 		WHERE CHNL_ID = #chnlIdInfo# 
+ 		AND USE_INIT_ID = #useInitIdInfo# 
+ 	    AND CMMN_GB_CD = #cmmnGbCd#
+	</delete>
+	
+	<delete id="deleteSoCode" parameterClass="codeVO">
+ 		DELETE FROM CMMN_CM 
+ 		WHERE CHNL_ID = #chnlIdInfo# 
+ 		AND USE_INIT_ID = #useInitIdInfo# 
+ 	    AND CMMN_CD = #cmmnCd#
+	</delete>
+	
+	<update id="codeDAO.modify" parameterClass="codeVO">
+		UPDATE CMMN_GB_CM
+		     SET CMMN_GB_NM = #cmmnGbNm#
+	    		  ,NUMBER1_DC = #number1Dc#
+	    		  ,NUMBER2_DC = #number2Dc#
+	    		  ,NUMBER3_DC = #number3Dc#
+	    		  ,CHRCTR1_DC = #chrctr1Dc#
+	    		  ,CHRCTR2_DC = #chrctr2Dc#
+	    		  ,CHRCTR3_DC = #chrctr3Dc#
+	    		  ,SORT_ORDR = #sortOrdr#
+	    		  ,RM = #rm#
+	    		  ,UPDATE_USER_ID = #useInitIdInfo#
+	    		  ,UPDATE_USER_DT = now()
+		 WHERE CHNL_ID = #chnlIdInfo# 
+		 AND USE_INIT_ID = #useInitIdInfo# 
+		 AND CMMN_GB_CD = #cmmnGbCd#
+	</update>
+	
+	<update id="modifySoCode" parameterClass="codeVO">
+		UPDATE CMMN_CM
+			/*code.modifySoCode*/
+		     SET 
+		     	   CMMN_GB_CD = #cmmnGbCd#
+		     	  ,CMMN_CD_NM = #cmmnCdNm#
+	    		  ,NUMBER1 = #number1Dc#
+	    		  ,NUMBER2 = #number2Dc#
+	    		  ,NUMBER3 = #number3Dc#
+	    		  ,CHRCTR1 = #chrctr1Dc#
+	    		  ,CHRCTR2 = #chrctr2Dc#
+	    		  ,CHRCTR3 = #chrctr3Dc#
+	    		  ,SORT_ORDR = #sortOrdr#
+	    		  ,RM = #rm#
+	    		  ,UPDATE_USER_ID = #useInitIdInfo#
+	    		  ,UPDATE_USER_DT = now()
+		 WHERE CHNL_ID = #chnlIdInfo# 
+		 AND USE_INIT_ID = #useInitIdInfo# 
+		 AND CMMN_CD = #cmmnCd#
+	</update>
+</sqlMap>

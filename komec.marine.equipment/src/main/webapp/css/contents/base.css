@@ -1,0 +1,35 @@
+@charset"UTF-8";
+/* base */
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, feldset, input, textarea, p, blockquote, th, td{
+	margin:0;
+	padding:0;
+}
+
+body {
+	color:#666666;
+	font-size:12px; 
+	font-family:"µ¸¿ò",Dotum,"±¼¸²",Gulim,Verdana,AppleGothic,sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight:normal;
+	font-size:12px;
+}
+
+ol, ul, li {
+	list-style:none;
+}
+
+form, fieldset, img{border:0;}
+img {vertical-align:middle;}
+label {cursor:pointer;}
+address, cation, em {
+	font-weight:normal;
+	font-style:normal;
+}
+
+/* a */
+a{font:12px; color:#666666; text-decoration:none;}
+a:hover{font:11px;color:#ff6600;}
+a:active{font:11px;color:#000000;}
+a:focus{font:11px;color:#666666;}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	
+    <!-- ================================================================================= -->
+	<!-- COMMON ========================================================================== -->
+	<!-- ================================================================================= -->	
+	<bean id="codeService" class="com.dbcore.sample.code.service.impl.CodeServiceImpl" lazy-init="true">
+		<property name="codeDAO" ref="codeDAO"/>
+	</bean>
+	<!-- ================================================================================= -->
+	<!-- DAO ============================================================================= -->
+	<!-- ================================================================================= -->
+	<bean id="codeDAO" class="com.dbcore.sample.code.service.impl.CodeDAO" lazy-init="true"/>
+</beans>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="file">
+
+	<typeAlias  alias="fileInfoVO" type="com.dbcore.model.FileInfoVO"/>
+
+	<resultMap id="file" class="com.dbcore.model.FileInfoVO">
+		<result property="file_path" column="file_path" columnIndex="1"/>
+		<result property="file_name" column="file_name" columnIndex="2"/>
+	</resultMap>
+	
+	<!-- 로그인 -->
+	<select id="commonDAO.fileAction" parameterClass="String" resultMap="file">
+			<![CDATA[
+			SELECT CHRCTR3_DC as file_path,
+					   RM as file_name
+			  FROM CMMN_GB_CM
+			 WHERE CONCAT(CHNL_ID,USE_INIT_ID,CMMN_GB_CD) = #param# 
+			]]>
+	</select>
+	
+</sqlMap>

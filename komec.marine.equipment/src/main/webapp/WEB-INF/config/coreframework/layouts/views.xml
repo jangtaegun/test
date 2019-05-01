@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+	<!-- 메인화면 -->
+	<definition extends="MAIN" name="mainPage">
+		<put-attribute name="contents" value="/WEB-INF/views/main/main.jsp"/>
+	</definition>
+	
+	<definition extends="MAIN" name="deCodeList">
+		<put-attribute name="contents" value="/WEB-INF/views/commonCode/deCode_list.jsp"/>
+	</definition>
+	<definition extends="MAIN" name="soCodeList">
+		<put-attribute name="contents" value="/WEB-INF/views/commonCode/soCode_list.jsp"/>
+	</definition>
+	<definition extends="MAIN" name="agentMngmnt">
+		<put-attribute name="contents" value="/WEB-INF/views/agent/agent_Management.jsp"/>
+	</definition>
+</tiles-definitions>

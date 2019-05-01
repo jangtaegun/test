@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<settings cacheModelsEnabled="true"
+		enhancementEnabled="true"
+		lazyLoadingEnabled="false"
+		maxRequests="32"
+		maxSessions="10"
+		maxTransactions="5"
+		useStatementNamespaces="true" />
+	<!-- 
+		context-sqlMap.xml 에서 Sql Mapping 파일의 일괄 지정 
+	-->
+	<sqlMap resource="coreframework/ibatis/sqlmap/config/dummy.xml"/>
+</sqlMapConfig>

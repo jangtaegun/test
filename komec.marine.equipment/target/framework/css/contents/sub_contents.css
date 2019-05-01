@@ -1,0 +1,44 @@
+@charset"UTF-8";
+/* layout */
+.top{position: relative; min-height:31px; padding: 5px 0; margin-bottom: 20px; width:100%;}
+.content{position: relative; margin-bottom: 20px;}
+
+/* 버튼스타일 */
+.btn_wrap {position: absolute; right: 0;}
+.btn_wrap p{float: left; padding-left: 3px;}
+.btn_wrap .btn01 a{padding: 4px 25px; border: 1px solid #2c2c2c; background: #555555; color: #fff; display: inline-block;}
+
+.search_input li{background:url(../img/bullet01.gif) no-repeat 0 7px; font-size:12px; padding: 0 15px 0 9px; float:left;}
+.search_input li label{font-weight: bold; color: #000; padding-top: 1px;}
+.search_input li .search_box01{height: 19px; line-height: 19px; border: 1px solid #a9a9a9; margin-left: 5px;}
+
+
+/* table스타일 */
+.table_list01 {margin:3px 0; border:0;	border-collapse:collapse; border-top:1px solid #a9a9a9; border-bottom:1px solid #cecece; width: 100%;}
+.table_list01 caption {display: none;}
+.table_list01 td { border-bottom: 1px dashed #e7e7e7; padding: 8px 5px; color: #535353; text-align: center;}
+.table_list01 th {background:#f3f3f3; color: #444444; font-size: 12px; font-weight: 600; padding: 8px 0;border-bottom: 1px solid #e7e7e7;}
+.table_list01 tr:hover {background:#fff1f1;}
+.table_list01 tr.on {background:#fff1f1;}
+.table_list01 tbody.tdtac td {text-align:center;}
+.table_list01 .cen {text-align:center;}
+.table_list01 .left {text-align:left;}
+.table_list01 .right {text-align:right;}
+.table_list01 .red {color:#f51100;}
+.table_list01 .blue {color:#3079d1;}
+.table_list01 .td1 {color: #df65c1; text-align: center; background: url(../../../images/egovframework/portal/td01_bg.gif) no-repeat right bottom;}
+.table_list01 .td2 {background-color: #F2F2F2;	text-align:center; font-weight: bold;}
+.table_list01 .td3 {background-color: #F8FCFE;	text-align:center; font-weight: bold;}
+
+.table_write01 {margin:3px 0; border:0;	border-collapse:collapse; border-top:1px solid #a9a9a9; border-bottom:1px solid #cecece; width: 100%;}
+.table_write01 caption {display: none;}
+.table_write01 td { border-bottom: 1px dashed #e7e7e7; padding: 2px 3px; color: #535353; text-align: center;}
+.table_write01 th {background:#f3f3f3; color: #444444; font-size: 12px; font-weight: 600; padding: 8px 0;border-bottom: 1px solid #e7e7e7;}
+.table_write01 tbody.tdtac td {text-align:center;}
+.table_write01 .cen {text-align:center;}
+.table_write01 .left {text-align:left;}
+.table_write01 .right {text-align:right;}
+.table_write01 .red {color:#f51100;}
+.table_write01 .blue {color:#3079d1;}
+.table_write01 .td1 {color: #df65c1;}
+.table_write01 input.text_box01 {height: 24px; line-height: 24px; border: 1px solid #d3d3d3; width:100%;}
