@@ -6,7 +6,7 @@ import com.dbcore.agent.vo.AgentInfoVo;
 
 public interface IAgentService {
 	
-	/* fsdfdsvdssssssssssssssssssss */
+	/* 1111111111111*/
 	public List<Object> selectAgentInfo(AgentInfoVo agentInfoVo)throws Exception;
 	
 	public int getTotalCount(AgentInfoVo agentInfoVo) throws Exception;
