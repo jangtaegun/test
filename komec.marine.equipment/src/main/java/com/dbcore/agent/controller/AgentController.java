@@ -31,7 +31,7 @@ public class AgentController extends BaseController {
 	@Autowired
 	private IAgentService agentService;
 	
-	//ssssssssssss0000000000000000000000000              ssss
+	//9090
 	@RequestMapping("/agentList.do")
 	public String getAgentList(@ModelAttribute("AgentVo") AgentInfoVo agentInfoVo,ModelMap model, HttpServletRequest request, HttpServletResponse response)throws Exception{
 		
